@@ -201,19 +201,14 @@ contract DiamondDao is IDiamondDao, Initializable, ReentrancyGuardUpgradeable, V
     }
 
     function initializeV2(
-        address _contractOwner,
         address _lowMajorityDao
     ) external reinitializer(2) {
-         if (_contractOwner == address(0) || _lowMajorityDao == address(0)) {
+        if (_lowMajorityDao == address(0)) {
             revert InvalidArgument();
         }
 
-        __Ownable_init(_contractOwner);
-
         lowMajorityDao = IDiamondDaoLowMajority(_lowMajorityDao);
-
         isCoreContract[_lowMajorityDao] = true;
-
         emit SetIsCoreContract(_lowMajorityDao, true);
     }
 

@@ -6,6 +6,7 @@ import "@nomicfoundation/hardhat-chai-matchers";
 import "@openzeppelin/hardhat-upgrades";
 import "hardhat-contract-sizer";
 import "hardhat-tracer";
+import './tasks/getContractUpgradeCalldata';
 
 
 let mnemonic = 'inspire school random normal account steel strike shove close album produce cube bounce memory before';
@@ -97,27 +98,11 @@ const config: HardhatUserConfig = {
     apiKey: "123",
     customChains: [
       {
-        network: "alpha3",
-        chainId: 777016,
-        urls: {
-          apiURL: "https://explorer.uniq.diamonds/api",
-          browserURL: "https://explorer.uniq.diamonds",
-        },
-      },
-      {
         network: "dmd",
         chainId: 777012,
         urls: {
-          apiURL: "https://explorer.uniq.diamonds/api",
-          browserURL: "https://explorer.uniq.diamonds",
-        },
-      },
-      {
-        network: "alpha4",
-        chainId: 777018,
-        urls: {
-            apiURL: "http://62.171.133.46:4400/api",
-            browserURL: "http://62.171.133.46:4400",
+          apiURL: "https://beta-explorer.bit.diamonds/api",
+          browserURL: "https://beta-explorer.bit.diamonds",
         },
       },
     ],
