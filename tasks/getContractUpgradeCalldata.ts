@@ -23,9 +23,11 @@ task("analyze", "analzyes contracts")
         const daoAddress = KnownContracts.get(KnownContractNames.DiamondDao)!;
         
         const adminAddress = await upgrades.erc1967.getAdminAddress(daoAddress);
+        const implementationAddress = await upgrades.erc1967.getImplementationAddress(daoAddress);
 
         console.log("DAO admin address:", adminAddress);
-
+        console.log("daoAddress:", daoAddress);
+        console.log("implementationAddress:", implementationAddress );
 
 
     });
@@ -132,9 +134,6 @@ task("getUpgradeCalldata", "Get contract upgrade calldata to use in DAO proposal
         }
         console.log(data);
 
-        console.log("contract:", contract);
-        console.log("calldata:", calldata);
-        console.log("  target:", proxyAdminAddress);
     });
 
 
