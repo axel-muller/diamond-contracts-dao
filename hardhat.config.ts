@@ -59,7 +59,19 @@ const config: HardhatUserConfig = {
       },
       gasPrice: 1000000000,
       hardfork: "london",
-  },
+    },
+    testnet: {
+      url: "http://62.171.133.46:20100",
+      accounts: {
+        count: 10,
+        path: "m/44'/60'/0'/0",
+        mnemonic
+      },
+
+      allowUnlimitedContractSize: true,
+      hardfork: "london",
+      minGasPrice: 1000000000
+    },
   },
   solidity: {
     compilers: [
@@ -103,6 +115,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: "https://beta-explorer.bit.diamonds/api",
           browserURL: "https://beta-explorer.bit.diamonds",
+        },
+      },
+      {
+        network: "testnet",
+        chainId: 37373,
+        urls: {
+            apiURL: "http://62.171.133.46:4000/api",
+            browserURL: "http://62.171.133.46:4000",
         },
       },
     ],
