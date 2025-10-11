@@ -1,6 +1,6 @@
 {
   "name": "diamond-contracts-dao",
-  "version": "0.1.0",
+  "version": "4.0.0",
   "description": "DMD DAO contracts",
   "scripts": {
     "compile": "npx hardhat compile --force",

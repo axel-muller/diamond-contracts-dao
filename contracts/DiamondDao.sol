@@ -45,7 +45,7 @@ contract DiamondDao is IDiamondDao, Initializable, ReentrancyGuardUpgradeable, V
     /// @dev this is the duration of each DAO phase.
     /// A full DAO cycle consists of 2 phases: Proposal and Voting,
     /// therefore the full cycle duration is double that amount.
-    uint64 public constant DAO_PHASE_DURATION = 24 hours;
+    uint64 public constant DAO_PHASE_DURATION = 14 days;
 
     address public reinsertPot;
     uint256 public createProposalFee;
@@ -148,6 +148,7 @@ contract DiamondDao is IDiamondDao, Initializable, ReentrancyGuardUpgradeable, V
         address _stakingHbbft,
         address _reinsertPot,
         address _txPermission,
+        address _bonusScore,
         address _lowMajorityDao,
         uint256 _createProposalFee,
         uint64 _startTimestamp
@@ -159,6 +160,7 @@ contract DiamondDao is IDiamondDao, Initializable, ReentrancyGuardUpgradeable, V
             _stakingHbbft == address(0) ||
             _txPermission == address(0) ||
             _lowMajorityDao == address(0) ||
+            _bonusScore == address(0) ||
             _createProposalFee == 0
         ) {
             revert InvalidArgument();
@@ -198,18 +200,8 @@ contract DiamondDao is IDiamondDao, Initializable, ReentrancyGuardUpgradeable, V
         isCoreContract[_stakingHbbft] = true;
         isCoreContract[_txPermission] = true;
         isCoreContract[_reinsertPot] = true;
-    }
-
-    function initializeV2(
-        address _lowMajorityDao
-    ) external reinitializer(2) {
-        if (_lowMajorityDao == address(0)) {
-            revert InvalidArgument();
-        }
-
-        lowMajorityDao = IDiamondDaoLowMajority(_lowMajorityDao);
         isCoreContract[_lowMajorityDao] = true;
-        emit SetIsCoreContract(_lowMajorityDao, true);
+        isCoreContract[_bonusScore] = true;
     }
 
     function setCreateProposalFee(uint256 _fee) external onlyGovernance withinAllowedRange(_fee) {

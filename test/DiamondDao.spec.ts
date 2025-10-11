@@ -50,6 +50,7 @@ describe("DiamondDao contract", function () {
     await mockStaking.waitForDeployment();
 
     const mockTxPermission = randomWallet();
+    const mockBonusScore = randomWallet();
 
     const daoLowMajorityFactory = await ethers.getContractFactory("MockDiamondDaoLowMajority");
     const daoLowMajority = await upgrades.deployProxy(
@@ -68,6 +69,7 @@ describe("DiamondDao contract", function () {
       await mockStaking.getAddress(),
       reinsertPot.address,
       mockTxPermission,
+      mockBonusScore,
       await daoLowMajority.getAddress(),
       CreateProposalFee,
       startTime + 1,
@@ -134,6 +136,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: randomWallet(),
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: randomWallet(),
         proposalFee: CreateProposalFee,
       },
@@ -144,6 +147,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: randomWallet(),
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: randomWallet(),
         proposalFee: CreateProposalFee,
       },
@@ -154,6 +158,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: ethers.ZeroAddress,
         reinsertPot: randomWallet(),
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: randomWallet(),
         proposalFee: CreateProposalFee,
       },
@@ -164,6 +169,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: ethers.ZeroAddress,
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: randomWallet(),
         proposalFee: CreateProposalFee,
       },
@@ -174,6 +180,18 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: randomWallet(),
         txPermission: ethers.ZeroAddress,
+        bonusScore: randomWallet(),
+        lowMajorityDao: randomWallet(),
+        proposalFee: CreateProposalFee,
+      },
+      {
+        name: "bonusScore contract address",
+        contractOwner: randomWallet(),
+        validatorSet: randomWallet(),
+        stakingHbbft: randomWallet(),
+        reinsertPot: randomWallet(),
+        txPermission: randomWallet(),
+        bonusScore: ethers.ZeroAddress,
         lowMajorityDao: randomWallet(),
         proposalFee: CreateProposalFee,
       },
@@ -184,6 +202,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: randomWallet(),
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: ethers.ZeroAddress,
         proposalFee: CreateProposalFee,
       },
@@ -194,6 +213,7 @@ describe("DiamondDao contract", function () {
         stakingHbbft: randomWallet(),
         reinsertPot: randomWallet(),
         txPermission: randomWallet(),
+        bonusScore: randomWallet(),
         lowMajorityDao: randomWallet(),
         proposalFee: 0n,
       },
@@ -211,6 +231,7 @@ describe("DiamondDao contract", function () {
             args.stakingHbbft,
             args.reinsertPot,
             args.txPermission,
+            args.bonusScore,
             args.lowMajorityDao,
             args.proposalFee,
             startTime + 1
@@ -227,6 +248,7 @@ describe("DiamondDao contract", function () {
 
       await expect(
         upgrades.deployProxy(daoFactory, [
+          randomWallet(),
           randomWallet(),
           randomWallet(),
           randomWallet(),
@@ -252,6 +274,7 @@ describe("DiamondDao contract", function () {
         randomWallet(),
         randomWallet(),
         randomWallet(),
+        randomWallet(),
         CreateProposalFee,
         startTime + 1
       ], {
@@ -262,6 +285,7 @@ describe("DiamondDao contract", function () {
 
       await expect(
         dao.initialize(
+          randomWallet(),
           randomWallet(),
           randomWallet(),
           randomWallet(),
@@ -507,7 +531,7 @@ describe("DiamondDao contract", function () {
           { value: CreateProposalFee }
         )
       ).to.be.revertedWithCustomError(dao, "NewProposalsLimitExceeded");
-    });
+    }).timeout(120000);
 
     it("should revert propose if there are unfinalized proposals in previous phases", async function () {
       const { dao } = await loadFixture(deployFixture);

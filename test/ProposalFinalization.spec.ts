@@ -37,6 +37,7 @@ describe("Proposal Acceptance Threshold", function () {
     await mockStaking.waitForDeployment();
 
     const mockTxPermission = ethers.Wallet.createRandom().address;
+    const mockBonusScore = ethers.Wallet.createRandom().address;
 
     const daoLowMajorityFactory = await ethers.getContractFactory("MockDiamondDaoLowMajority");
     const daoLowMajority = await upgrades.deployProxy(
@@ -55,6 +56,7 @@ describe("Proposal Acceptance Threshold", function () {
       await mockStaking.getAddress(),
       reinsertPot.address,
       mockTxPermission,
+      mockBonusScore,
       await daoLowMajority.getAddress(),
       createProposalFee,
       startTime + 10

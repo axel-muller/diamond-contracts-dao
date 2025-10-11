@@ -47,6 +47,7 @@ async function compileProxy() {
         "0x1100000000000000000000000000000000000001", //address _stakingHbbft,
         "0x2000000000000000000000000000000000000001", //address _reinsertPot,
         "0x4000000000000000000000000000000000000001", //address _txPermission,
+        "0x1300000000000000000000000000000000000001", // address _bonusScore
         daoLowMajorityProxyAddress, //address _lowMajorityDao
         ethers.parseEther("10"),//uint256 _createProposalFee,
         startTimeBigInt //uint64 _startTimestamp
@@ -87,14 +88,6 @@ async function compileProxy() {
     }
 
     fs.writeFileSync("out/spec_dao.json", JSON.stringify(spec));
-
-    //spec[]
-
-    //let data = proxyDeployTX.data;
-    //const initializerData = getInitializerData(contractFactory.interface, args, 'initialize')
-    //const tx = await proxyFactory.getDeployTransaction(logicAddress, ownerAddress, initializerData);
-
-    //this.proxyBytecode = tx.data;
 }
 
 compileProxy();
